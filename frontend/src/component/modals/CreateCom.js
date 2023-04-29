@@ -16,7 +16,7 @@ const CreateCom = () => {
                 name: name,
                 url: url,
             })
-                .then((res) => console.log(res.data))
+                .then((res) => closeModal())
                 .catch((err) => console.log(err))
         } else {
             alert("Name must be greater than 3");

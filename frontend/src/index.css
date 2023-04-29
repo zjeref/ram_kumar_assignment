@@ -18,5 +18,5 @@ code {
 }
 
 .btn {
-    @apply px-3 py-1 text-slate-200 rounded-lg shadow-sm shadow-slate-500  hover:opacity-90
+    @apply px-3 py-1 text-slate-200 rounded-lg shadow-sm shadow-slate-500  hover:opacity-90 cursor-pointer
 }

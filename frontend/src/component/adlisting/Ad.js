@@ -5,27 +5,26 @@ const Ad = ({ data }) => {
     useEffect(() => {
         setcurrentData(data)
     }, [data])
-    console.log(currentData)
 
     return (
-        <div className="">
+        <>
             {currentData &&
-                <div className="w-64 bg-white p-2">
-                    <h1 className="text-lg font-semibold">{currentData.companyId.name}</h1>
+                <div className="w-96 h-full bg-white p-2 rounded-md shadow-xl flex flex-col">
+                    <h1 className="text-xl text-primary font-semibold">{currentData.company.name}</h1>
                     <div>
                         <h2 className="text-md font-semibold">{currentData.headline}</h2>
                         <p>{currentData.primaryText}</p>
                         <div>
-                            <img src="https://i.imgur.com/YoMXcLE.jpeg" alt="" />
+                            <img src={currentData.imageUrl} alt="" className='w-full h-64' />
                         </div>
                         <p className="text-slate-600">{currentData.description}</p>
                     </div>
-                    <div className="w-full text-center my-2">
-                        <a href={currentData.companyId.url} class="btn bg-dark-pastel">{currentData.CTA}</a>
+                    <div className="w-full text-center justify-end my-2 ">
+                        <a href={currentData.company.url} className="btn bg-dark-pastel" target="_blank">{currentData.CTA}</a>
                     </div>
                 </div>
             }
-        </div>
+        </>
     )
 }
 

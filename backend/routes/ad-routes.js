@@ -25,20 +25,56 @@ router.post('/create/:companyId', async (req, res) => {
     }
 })
 
+// router.get('/', async (req, res) => {
+//     try {
+//         Ad.createIndexes({})
+//         const ads = await Ad.find({})
+//             .populate('companyId');
+//         res.status(200).json(ads);
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+// })
+
 router.get('/', async (req, res) => {
     try {
-        const ads = await Ad.find({})
-            .populate('companyId');
-        res.status(200).json(ads);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-})
-
-router.get('/:id', async (req, res) => {
-    try {
-        const ad = await Ad.findById(id)
-            .populate('companyId');;
+        const searchString = req.query.search
+        let ad
+        if (searchString != "" || undefined) {
+            ad = await Ad.aggregate([
+                {
+                    $lookup: {
+                        from: "companies",
+                        localField: "companyId",
+                        foreignField: "_id",
+                        as: "company"
+                    }
+                },
+                { $unwind: "$company" },
+                {
+                    $match: {
+                        $or: [
+                            { "company.name": { $regex: searchString, $options: "i" } },
+                            { description: { $regex: searchString, $options: "i" } },
+                            { headline: { $regex: searchString, $options: "i" } },
+                            { primaryText: { $regex: searchString, $options: "i" } }
+                        ]
+                    }
+                },
+            ])
+        } else {
+            ad = await Ad.aggregate([
+                {
+                    $lookup: {
+                        from: "companies",
+                        localField: "companyId",
+                        foreignField: "_id",
+                        as: "company"
+                    }
+                },
+                { $unwind: "$company" }
+            ])
+        }
         res.status(200).json(ad);
     } catch (err) {
         res.status(500).json({ message: err.message });
