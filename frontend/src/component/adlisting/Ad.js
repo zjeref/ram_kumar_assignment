@@ -20,7 +20,7 @@ const Ad = ({ data }) => {
                         <p className="text-slate-600">{currentData.description}</p>
                     </div>
                     <div className="w-full text-center justify-end my-2 ">
-                        <a href={currentData.company.url} className="btn bg-dark-pastel" target="_blank">{currentData.CTA}</a>
+                        <a href={currentData.company.url} rel="noreferrer" className="btn bg-dark-pastel" target="_blank">{currentData.CTA}</a>
                     </div>
                 </div>
             }

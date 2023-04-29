@@ -37,8 +37,8 @@ const CreateCom = () => {
                             onChange={(e) => setName(e.target.value)}
                         />
                     </label>
-                    <label htmlFor="headline" className="flex flex-col">
-                        <span className="w-1/3">HeadLine: </span>
+                    <label htmlFor="url" className="flex flex-col">
+                        <span className="w-1/3">URL: </span>
                         <input className="border-2 px-1 border-black" type="url" placeholder="Enter your company's url"
                             onChange={(e) => setUrl(e.target.value)}
                         />
