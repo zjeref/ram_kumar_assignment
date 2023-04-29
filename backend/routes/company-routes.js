@@ -11,7 +11,7 @@ router.post('/create', async (req, res) => {
             url: url
         });
         newCompany.save();
-        res.send(200).json(newCompany);
+        res.status(200).json(newCompany);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

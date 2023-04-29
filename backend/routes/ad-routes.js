@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Ad = require('../model/Ad');
 
-router.get('/create/:companyId', async (req, res) => {
+router.post('/create/:companyId', async (req, res) => {
     try {
         const companyId = req.params.companyId;
         const { primaryText, headline, description, CTA, imageUrl } = req.body;
@@ -14,7 +14,11 @@ router.get('/create/:companyId', async (req, res) => {
             CTA: CTA,
             imageUrl: imageUrl
         })
-        newAd.save();
+        try {
+            newAd.save();
+        } catch (e) {
+            res.status(409).json({ message: e.message });
+        }
         res.status(200).json(newAd);
     } catch (err) {
         res.status(500).json({ message: err.message });

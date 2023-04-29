@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const adSchema = new Schema({
     companyId: {
         type: Schema.Types.ObjectId,
-        ref: "Company",
+        ref: 'Company',
         required: true
     },
     primaryText: {

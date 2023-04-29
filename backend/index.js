@@ -10,6 +10,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mentorAssignment')
     .catch((err) => console.error(err))
 
 app.use(cors());
+app.use(express.json());
 app.use("/api/company", companyRoutes);
 app.use("/api/ad", adRoutes);
 
