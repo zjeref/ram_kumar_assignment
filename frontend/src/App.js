@@ -5,6 +5,7 @@ import Navbar from "./component/Navbar";
 import SearchBar from "./component/SearchBar";
 import CreateAd from "./component/modals/CreateAd";
 import CreateCom from "./component/modals/CreateCom";
+import Adlist from "./component/adlisting/Adlist";
 
 
 
@@ -22,6 +23,7 @@ function App() {
             <CreateCom /> :
             null
         }
+        <Adlist />
       </div>
     </GlobalState.Provider>
   );

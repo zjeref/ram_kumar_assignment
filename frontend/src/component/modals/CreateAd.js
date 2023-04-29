@@ -3,16 +3,17 @@ import axios from 'axios';
 import { GlobalState } from '../../middlewares/global-states';
 
 const CreateAd = () => {
-    const [company, setCompany] = useState('');
+    const [company, setCompany] = useState('Default');
     const [primaryText, setprimaryText] = useState('');
     const [headline, setHeadline] = useState('');
-    const [cta, setCta] = useState('');
+    const [description, setDescription] = useState('');
+    const [cta, setCta] = useState('Default');
     const [imageUrl, setImageUrl] = useState('');
 
     const [allCompany, setAllCompany] = useState(null);
     const [allCta, setAllCta] = useState(null);
 
-    const {dispatch} = useContext(GlobalState)
+    const { dispatch } = useContext(GlobalState)
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/company/`)
@@ -20,21 +21,27 @@ const CreateAd = () => {
             .catch(err => console.error(err))
         setAllCta(["Sign Up", "Shop Now", "Learn More", "Order Now"])
     }, [])
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post(`${process.env.REACT_APP_API_URL}/ad/create/${company}`, {
-            primaryText: primaryText,
-            headline: headline,
-            CTA: cta,
-            imageUrl: imageUrl
-        })
-            .then(res => console.log(res))
-            .catch(err => console.error(err))
+        if (cta !== "Default" && company !== "Default") {
+            await axios.post(`${process.env.REACT_APP_API_URL}/ad/create/${company}`, {
+                primaryText: primaryText,
+                headline: headline,
+                description: description,
+                CTA: cta,
+                imageUrl: imageUrl
+            })
+                .then(res => {
+                    dispatch({ type: "modal", payload: "" })
+                })
+                .catch(err => console.error(err))
+        } else {
+            alert("Please enter the form correctly")
+        }
     }
 
     const closeModal = () => {
-        dispatch({type: 'modal', payload:""})
+        dispatch({ type: 'modal', payload: "" })
     }
     return (
         <div className="w-full absolute left-1/2 ">
@@ -43,7 +50,8 @@ const CreateAd = () => {
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-1 my-2">
                     <label htmlFor="companyName" className="flex flex-col">
                         <span className="w-1/3">Company:</span>
-                        <select name="companyName" id="companyName" className="border-2 border-black bg-white" value={company} onChange={(e) => setCompany(e.target.value)}>
+                        <select name="companyName" id="companyName" className="border-2 border-black bg-white" defaultValue="Default" value={company} onChange={(e) => setCompany(e.target.value)}>
+                            <option key={0} value={"Default"} selected>Default</option>
                             {allCompany &&
                                 allCompany.map(company => {
                                     return <option key={company._id} value={company._id}>{company.name}</option>
@@ -59,9 +67,14 @@ const CreateAd = () => {
                         <span className="w-1/3">HeadLine: </span>
                         <textarea className="border-2 px-1 border-black" type="text" placeholder='Enter your headline' value={headline} onChange={(e) => setHeadline(e.target.value)} />
                     </label>
+                    <label htmlFor="description" className="flex flex-col">
+                        <span className="w-1/3">description: </span>
+                        <textarea className="border-2 px-1 border-black" type="text" placeholder='Enter your Description' value={description} onChange={(e) => setDescription(e.target.value)} />
+                    </label>
                     <label htmlFor="CTA" className="flex flex-col">
                         <span className="w-1/3">CTA: </span>
-                        <select name="cta" id="cta" className="border-2 border-black bg-white" value={cta} onChange={(e) => setCta(e.target.value)}>
+                        <select name="cta" id="cta" className="border-2 border-black bg-white" defaultValue="Default" value={cta} onChange={(e) => setCta(e.target.value)}>
+                            <option key={0} value={"Default"} selected>Default</option>
                             {allCta &&
                                 allCta.map(cta => {
                                     return <option key={cta} value={cta}>{cta}</option>
