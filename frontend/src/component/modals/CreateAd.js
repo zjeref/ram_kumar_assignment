@@ -52,10 +52,10 @@ const CreateAd = () => {
                         <span className="w-1/3">Company:</span>
                         <select name="companyName" id="companyName" className="border-2 border-black bg-white" defaultValue="Default" value={company} onChange={(e) => setCompany(e.target.value)}>
                             <option key={0} value={"Default"} selected>Default</option>
-                            {allCompany &&
+                            {Array.isArray(allCompany) && allCompany.length > 0 ?
                                 allCompany.map(company => {
                                     return <option key={company._id} value={company._id}>{company.name}</option>
-                                })
+                                }) : ""
                             }
                         </select>
                     </label>
@@ -75,10 +75,10 @@ const CreateAd = () => {
                         <span className="w-1/3">CTA: </span>
                         <select name="cta" id="cta" className="border-2 border-black bg-white" defaultValue="Default" value={cta} onChange={(e) => setCta(e.target.value)}>
                             <option key={0} value={"Default"} selected>Default</option>
-                            {allCta &&
+                            {Array.isArray(allCta) && allCta.length > 0 ?
                                 allCta.map(cta => {
                                     return <option key={cta} value={cta}>{cta}</option>
-                                })
+                                }) : ""
                             }
                         </select>
                     </label>
