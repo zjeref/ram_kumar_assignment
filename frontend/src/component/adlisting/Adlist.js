@@ -20,7 +20,7 @@ const Adlist = () => {
         <div className="w-full flex justify-center mt-10 px-5">
             <div className="max-w-6xl ">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {ads && ads.length >0?
+                    {Array.isArray(ads) && ads.length >0?
                         ads.map((ad) => {
                             return <Ad key={ad._id} data={ad} />
                         }):""
